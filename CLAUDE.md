@@ -141,7 +141,7 @@ Grid de 12 colunas: texto em 8, foto em 4 (alinhada embaixo à direita). No mobi
 
 - Rótulo mono: `// desenvolvedor · infraestrutura`
 - H1: **Desenvolvo sistemas e cuido da infraestrutura onde eles rodam.**
-- Parágrafo: Sou Rodrigo Grassi, desenvolvedor .NET e administrador de redes e servidores na FMVZ/UNESP, em Botucatu (SP). Aqui ficam meus projetos pessoais e o que aprendo pelo caminho.
+- Parágrafo: Sou Rodrigo Grassi, analista de sistemas e administrador de redes da FMVZ/UNESP, em Botucatu (SP). Desenvolvo sistemas, administro redes e servidores, e guardo aqui meus projetos pessoais e o que aprendo pelo caminho.
 - Botões: **Ver projetos** (primário → `#paiol`) e **Contato** (secundário → `#contato`)
 - Foto: `src/assets/fotos/rodrigo-topo.jpg`, 320×400, `object-fit: cover`, cantos 32px, `alt="Rodrigo Grassi"`.
 
@@ -156,6 +156,7 @@ Desktop: coluna esquerda (4 colunas) com rótulo, título e fotos; coluna direit
 - Legenda (14px, `--muted`): Com a Thaís, minha parceira de vida, e com a Moira, minha cãopanheira.
 - Parágrafo 1: Gosto de tecnologia sem fanatismo: uso a ferramenta que resolve o problema, não a que está na moda. No dia a dia, escrevo sistemas, cuido de bancos de dados e administro a rede e os servidores que colocam tudo no ar. E sou movido a aprender coisa nova, o que explica metade dos projetos guardados aqui.
 - Parágrafo 2: Fora da tela, levo uma vida simples: família, saúde, esporte e tempo na cozinha. E sempre tem algum projeto na bancada: eletrônica, impressão 3D ou o que aparecer.
+- Parágrafo 3: Em 2026, recebi da diretoria da FMVZ um certificado de reconhecimento pela excelência no trabalho, a partir de um elogio registrado na Ouvidoria.
 - Seis blocos de competência (grid de 3 colunas no desktop, empilhados no mobile), em `--surface`, cantos 24px:
 
 | Título | Texto |

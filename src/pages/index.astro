@@ -12,7 +12,7 @@ const pessoa = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Rodrigo Grassi",
-  jobTitle: "Desenvolvedor .NET e administrador de redes e servidores",
+  jobTitle: "Analista de sistemas e administrador de redes",
   url: Astro.site?.href,
   ...(perfis.length > 0 && { sameAs: perfis }),
 };
@@ -20,7 +20,7 @@ const pessoa = {
 
 <BaseLayout
   titulo="Rodrigo Grassi — desenvolvedor e infraestrutura"
-  descricao="Rodrigo Grassi, desenvolvedor .NET e administrador de redes e servidores na FMVZ/UNESP, em Botucatu (SP). Projetos pessoais e o que aprendo pelo caminho."
+  descricao="Rodrigo Grassi, analista de sistemas e administrador de redes da FMVZ/UNESP, em Botucatu (SP). Projetos pessoais e o que aprendo pelo caminho."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(pessoa)} />
 
