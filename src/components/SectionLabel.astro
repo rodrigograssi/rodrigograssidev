@@ -1,0 +1,30 @@
+---
+// Rótulo mono de seção, ex.: "01 / sobre". Sobre o roxo, usar sobreRoxo.
+interface Props {
+  sobreRoxo?: boolean;
+}
+
+const { sobreRoxo = false } = Astro.props;
+---
+
+<p class:list={["rotulo", { "sobre-roxo": sobreRoxo }]}><slot /></p>
+
+<style>
+  .rotulo {
+    color: var(--lilas);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .sobre-roxo {
+    color: var(--on-roxo-label);
+  }
+
+  @media (max-width: 768px) {
+    .rotulo {
+      font-size: 13px;
+    }
+  }
+</style>

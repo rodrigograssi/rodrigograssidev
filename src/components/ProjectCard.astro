@@ -1,0 +1,135 @@
+---
+import StatusPill from "./StatusPill.astro";
+import type { Projeto } from "../lib/projetos";
+
+interface Props {
+  projeto: Projeto;
+}
+
+const { projeto } = Astro.props;
+const { nome, subdominio, tagline, descricao, status, link } = projeto.data;
+
+const engavetado = status === "engavetado";
+const href = `/projetos/${projeto.id}/`;
+
+// A seta é decorativa: fica fora do nome acessível do link
+const textoLink = link?.replace(/\s*→\s*$/, "");
+---
+
+<li class:list={["card", { engavetado }]}>
+  <div class="topo-card">
+    <span class="subdominio">{engavetado ? "no fundo do paiol" : subdominio}</span>
+    <StatusPill status={status} />
+  </div>
+
+  <h3>{nome}</h3>
+  <p class="descricao">{tagline} {descricao}</p>
+
+  {!engavetado && textoLink && (
+    <a class="link" href={href}>
+      {textoLink} <span aria-hidden="true">→</span>
+    </a>
+  )}
+</li>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+
+  .engavetado {
+    background: transparent;
+    border: 1.5px dashed var(--border-dashed);
+  }
+
+  .topo-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .subdominio {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  h3 {
+    margin-top: 40px;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .descricao {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-top: auto;
+    padding-top: 20px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* O card inteiro vira área clicável do link */
+  .link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  .link:focus-visible {
+    outline: none;
+  }
+
+  .link:focus-visible::after {
+    outline: 2px solid var(--lilas);
+    outline-offset: 3px;
+  }
+
+  .card:has(.link:hover) {
+    background: #1F1F23;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      padding: 28px;
+    }
+
+    .subdominio {
+      font-size: 12px;
+    }
+
+    h3 {
+      margin-top: 28px;
+      font-size: 28px;
+    }
+
+    .descricao {
+      font-size: 15px;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionLabel from "../components/SectionLabel.astro";
+---
+
+<BaseLayout
+  titulo="Página não encontrada — Rodrigo Grassi"
+  descricao="Essa página não existe ou mudou de lugar."
+  semIndexacao
+>
+  <section class="erro container">
+    <SectionLabel>// 404 · não achei no paiol</SectionLabel>
+    <h1>Uai, sô. Cadê a página?</h1>
+    <p>Revirei o paiol de ponta a ponta, olhei atrás da tulha e embaixo da carroça. Não achei. Deve ter ido pra cidade e não voltou.</p>
+    <div class="acoes">
+      <a class="botao botao--primario" href="/">Voltar pra casa</a>
+      <a class="botao botao--secundario" href="/#paiol">Ver projetos</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .erro {
+    padding-block: 120px;
+  }
+
+  h1 {
+    max-width: 14ch;
+    margin-top: 24px;
+    font-size: clamp(42px, 5.9vw, 84px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  p {
+    max-width: 600px;
+    margin-top: 28px;
+    color: var(--text-2);
+    font-size: 21px;
+    line-height: 1.65;
+  }
+
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 768px) {
+    .erro {
+      padding-block: 72px;
+    }
+
+    p {
+      font-size: 17px;
+    }
+
+    .acoes {
+      gap: 12px;
+      margin-top: 32px;
+    }
+  }
+</style>

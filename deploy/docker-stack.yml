@@ -1,0 +1,37 @@
+# Stack do rodrigograssi.dev no Docker Swarm, atrás do Traefik.
+# Variáveis em deploy/.env (modelo em deploy/.env.exemplo). Uso: ver deploy/LEIAME.md.
+
+services:
+  site:
+    image: ${IMAGEM:?defina IMAGEM em deploy/.env}
+    networks:
+      - traefik
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: rollback
+        monitor: 20s
+      rollback_config:
+        order: start-first
+      restart_policy:
+        condition: any
+        delay: 5s
+      resources:
+        limits:
+          memory: 64M
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.rodrigograssi.rule=Host(`rodrigograssi.dev`)
+        - traefik.http.routers.rodrigograssi.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}
+        - traefik.http.routers.rodrigograssi.tls=true
+        - traefik.http.routers.rodrigograssi.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencrypt}
+        - traefik.http.services.rodrigograssi.loadbalancer.server.port=8080
+
+networks:
+  # Rede overlay onde o Traefik já está; o serviço só participa dela,
+  # então o Traefik não precisa de label indicando qual rede usar
+  traefik:
+    external: true
+    name: ${TRAEFIK_REDE:-traefik-public}

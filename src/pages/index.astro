@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Sobre from "../components/Sobre.astro";
+import Paiol from "../components/Paiol.astro";
+import Escritos from "../components/Escritos.astro";
+import { site } from "../config";
+
+// JSON-LD Person: sameAs só com os perfis preenchidos em config.ts
+const perfis = [site.linkedin, site.github].filter(Boolean);
+const pessoa = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Rodrigo Grassi",
+  jobTitle: "Desenvolvedor .NET e administrador de redes e servidores",
+  url: Astro.site?.href,
+  ...(perfis.length > 0 && { sameAs: perfis }),
+};
+---
+
+<BaseLayout
+  titulo="Rodrigo Grassi — desenvolvedor e infraestrutura"
+  descricao="Rodrigo Grassi, desenvolvedor .NET e administrador de redes e servidores na FMVZ/UNESP, em Botucatu (SP). Projetos pessoais e o que aprendo pelo caminho."
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(pessoa)} />
+
+  <Hero slot="topo" />
+  <Sobre />
+  <Paiol />
+  <Escritos />
+</BaseLayout>

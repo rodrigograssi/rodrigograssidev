@@ -1,0 +1,55 @@
+:root {
+  color-scheme: dark;
+
+  /* Base */
+  --bg: #0B0B0C;            /* fundo da página */
+  --surface: #18181B;       /* cards e blocos */
+  --surface-2: #27272A;     /* pílulas de status, divisórias */
+  --border-dashed: #3F3F46; /* card engavetado */
+
+  /* Texto sobre fundo escuro */
+  --text: #F5F5F7;
+  --text-2: #D4D4D8;        /* parágrafos de destaque */
+  --muted: #A1A1AA;         /* textos secundários */
+
+  /* Acento */
+  --roxo: #7A1FD6;          /* blocos sólidos: topo e rodapé */
+  --lilas: #C29BF7;         /* rótulos de seção e links sobre fundo escuro */
+  --lilas-hover: #D9C2FB;
+
+  /* Sobre o roxo */
+  --on-roxo: #FFFFFF;
+  --on-roxo-soft: #F3EAFF;  /* parágrafos sobre roxo */
+  --on-roxo-label: #EDE0FF; /* rótulos mono sobre roxo */
+  --roxo-divider: #A868F0;
+  --btn-on-roxo-text: #2A0A4F;
+
+  /* Tipografia */
+  --font-sans: "Plus Jakarta Sans Variable", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Raios */
+  --radius-card: 32px;
+  --radius-tile: 24px;
+  --radius-photo: 32px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --content-max: 1200px;
+  --gutter: 120px;
+}
+
+/* Telas intermediárias: o gutter de 120px espreme demais o conteúdo */
+@media (max-width: 1200px) {
+  :root {
+    --gutter: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --radius-card: 26px;
+    --radius-tile: 22px;
+    --gutter: 20px;
+  }
+}

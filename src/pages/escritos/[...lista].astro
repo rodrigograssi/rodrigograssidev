@@ -1,0 +1,52 @@
+---
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import SectionLabel from "../../components/SectionLabel.astro";
+import PostListItem from "../../components/PostListItem.astro";
+import { obterEscritos } from "../../lib/escritos";
+
+// Rota com parâmetro para que /escritos/ só seja gerada quando houver escrito publicado.
+// `lista: undefined` gera exatamente /escritos/.
+export async function getStaticPaths() {
+  const escritos = await obterEscritos();
+  return escritos.length > 0 ? [{ params: { lista: undefined } }] : [];
+}
+
+const escritos = await obterEscritos();
+---
+
+<ArticleLayout
+  titulo="Anotações de oficina"
+  tituloPagina="Anotações de oficina — Rodrigo Grassi"
+  descricao="O que aprendo resolvendo problemas reais de infraestrutura, .NET e o que mais aparecer."
+  prosa={false}
+>
+  <SectionLabel slot="antes-titulo" sobreRoxo>// escritos</SectionLabel>
+  <p slot="depois-titulo" class="subtitulo">
+    O que aprendo resolvendo problemas reais de infraestrutura, .NET e o que mais aparecer.
+  </p>
+
+  <ul class="lista">
+    {escritos.map((escrito) => <PostListItem escrito={escrito} />)}
+  </ul>
+</ArticleLayout>
+
+<style>
+  .subtitulo {
+    margin-top: 20px;
+    color: var(--on-roxo-soft);
+    font-size: 21px;
+    line-height: 1.6;
+  }
+
+  .lista {
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--surface-2);
+  }
+
+  @media (max-width: 768px) {
+    .subtitulo {
+      font-size: 17px;
+    }
+  }
+</style>

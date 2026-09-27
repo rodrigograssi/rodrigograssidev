@@ -1,0 +1,40 @@
+---
+// Meta tags de SEO, Open Graph e Twitter Card
+interface Props {
+  titulo: string;
+  descricao: string;
+  tipo?: "website" | "article";
+  dataPublicacao?: Date;
+  semIndexacao?: boolean;
+}
+
+const { titulo, descricao, tipo = "website", dataPublicacao, semIndexacao = false } = Astro.props;
+
+const urlCanonica = new URL(Astro.url.pathname, Astro.site);
+const imagem = new URL("/og-padrao.png", Astro.site);
+---
+
+<title>{titulo}</title>
+<meta name="description" content={descricao} />
+{semIndexacao ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={urlCanonica} />}
+
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<meta property="og:type" content={tipo} />
+<meta property="og:site_name" content="rodrigograssi.dev" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:title" content={titulo} />
+<meta property="og:description" content={descricao} />
+<meta property="og:url" content={urlCanonica} />
+<meta property="og:image" content={imagem} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="rodrigograssi.dev — Rodrigo Grassi, desenvolvedor e infraestrutura" />
+{dataPublicacao && <meta property="article:published_time" content={dataPublicacao.toISOString()} />}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={titulo} />
+<meta name="twitter:description" content={descricao} />
+<meta name="twitter:image" content={imagem} />

@@ -1,0 +1,19 @@
+---
+import { getEntry, render } from "astro:content";
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import SectionLabel from "../components/SectionLabel.astro";
+
+const pagina = await getEntry("paginas", "paiol");
+if (!pagina) throw new Error("Conteúdo da página /paiol não encontrado em src/content/paginas/paiol.md");
+
+const { Content } = await render(pagina);
+---
+
+<ArticleLayout
+  titulo={pagina.data.titulo}
+  tituloPagina={`${pagina.data.titulo} — Rodrigo Grassi`}
+  descricao={pagina.data.descricao}
+>
+  <SectionLabel slot="antes-titulo" sobreRoxo>// o paiol</SectionLabel>
+  <Content />
+</ArticleLayout>

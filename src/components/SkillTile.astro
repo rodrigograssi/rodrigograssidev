@@ -1,0 +1,40 @@
+---
+interface Props {
+  titulo: string;
+}
+
+const { titulo } = Astro.props;
+---
+
+<li class="bloco">
+  <h3>{titulo}</h3>
+  <p><slot /></p>
+</li>
+
+<style>
+  .bloco {
+    padding: 28px;
+    border-radius: var(--radius-tile);
+    background: var(--surface);
+  }
+
+  h3 {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .bloco {
+      padding: 24px;
+    }
+  }
+</style>

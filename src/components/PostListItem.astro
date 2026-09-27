@@ -1,0 +1,83 @@
+---
+import { dataIso, formatarData, type Escrito } from "../lib/escritos";
+
+interface Props {
+  escrito: Escrito;
+}
+
+const { escrito } = Astro.props;
+const { titulo, data, rascunho } = escrito.data;
+---
+
+<li class="item">
+  <a href={`/escritos/${escrito.id}/`}>
+    <span class="titulo">
+      {titulo}
+      {rascunho && <span class="rascunho">rascunho</span>}
+    </span>
+    <time datetime={dataIso(data)}>{formatarData(data)}</time>
+  </a>
+</li>
+
+<style>
+  .item {
+    border-bottom: 1px solid var(--surface-2);
+  }
+
+  a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 28px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .titulo {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    transition: color 0.15s ease;
+  }
+
+  a:hover .titulo {
+    color: var(--lilas-hover);
+  }
+
+  time {
+    flex-shrink: 0;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+
+  /* Só aparece no npm run dev: rascunhos não entram no build de produção */
+  .rascunho {
+    margin-left: 10px;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--surface-2);
+    color: #E4E4E7;
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 768px) {
+    a {
+      flex-direction: column-reverse;
+      gap: 8px;
+      padding-block: 22px;
+    }
+
+    .titulo {
+      font-size: 19px;
+    }
+
+    time {
+      font-size: 13px;
+    }
+  }
+</style>

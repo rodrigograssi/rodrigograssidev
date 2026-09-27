@@ -1,0 +1,48 @@
+---
+import type { ComponentProps } from "astro/types";
+import "../styles/fontes.css";
+import "../styles/global.css";
+import fonteSans from "@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url";
+
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Seo from "../components/Seo.astro";
+import { obterEscritos } from "../lib/escritos";
+
+type Props = ComponentProps<typeof Seo>;
+
+const props = Astro.props;
+
+// Sem escrito publicado, nada de "Escritos" no menu nem RSS no rodapé
+const temEscritos = (await obterEscritos()).length > 0;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#7A1FD6" />
+    <link rel="preload" href={fonteSans} as="font" type="font/woff2" crossorigin />
+    <Seo {...props} />
+    <meta name="generator" content={Astro.generator} />
+    {temEscritos && (
+      <link rel="alternate" type="application/rss+xml" title="Anotações de oficina — Rodrigo Grassi" href="/rss.xml" />
+    )}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+    <div class="bloco-roxo">
+      <Header mostrarEscritos={temEscritos} />
+      <slot name="topo" />
+    </div>
+
+    <main id="conteudo">
+      <slot />
+    </main>
+
+    <Footer mostrarRss={temEscritos} />
+  </body>
+</html>

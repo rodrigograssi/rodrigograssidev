@@ -1,0 +1,13 @@
+node_modules
+dist
+.astro
+.git
+.gitignore
+.dockerignore
+.env
+.env.*
+Dockerfile
+deploy/docker-stack.yml
+deploy/LEIAME.md
+CLAUDE.md
+npm-debug.log*

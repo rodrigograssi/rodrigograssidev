@@ -1,0 +1,71 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+import PostListItem from "./PostListItem.astro";
+import { obterEscritos } from "../lib/escritos";
+
+// A seção inteira só existe quando há pelo menos um escrito publicado
+const recentes = (await obterEscritos()).slice(0, 3);
+---
+
+{recentes.length > 0 && (
+  <section id="escritos" class="secao" aria-labelledby="titulo-escritos">
+    <div class="container">
+      <div class="cabecalho-secao">
+        <SectionLabel>03 / escritos</SectionLabel>
+        <h2 id="titulo-escritos" class="titulo-secao">Anotações de oficina</h2>
+        <p class="texto-destaque">O que aprendo resolvendo problemas reais de infraestrutura, .NET e o que mais aparecer.</p>
+      </div>
+
+      <ul class="lista">
+        {recentes.map((escrito) => <PostListItem escrito={escrito} />)}
+      </ul>
+
+      <a class="link-todos" href="/escritos/">Todos os escritos <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+)}
+
+<style>
+  .cabecalho-secao {
+    max-width: 720px;
+  }
+
+  h2 {
+    margin-top: 16px;
+  }
+
+  .texto-destaque {
+    margin-top: 24px;
+  }
+
+  .lista {
+    margin-top: 48px;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--surface-2);
+  }
+
+  .link-todos {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-top: 24px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .link-todos:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .texto-destaque {
+      margin-top: 20px;
+    }
+
+    .lista {
+      margin-top: 32px;
+    }
+  }
+</style>

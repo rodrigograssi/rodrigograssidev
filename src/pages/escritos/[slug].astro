@@ -1,0 +1,103 @@
+---
+import { render } from "astro:content";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import SectionLabel from "../../components/SectionLabel.astro";
+import { dataIso, formatarData, obterEscritos, type Escrito } from "../../lib/escritos";
+
+export async function getStaticPaths() {
+  const escritos = await obterEscritos();
+  return escritos.map((escrito) => ({
+    params: { slug: escrito.id },
+    props: { escrito },
+  }));
+}
+
+interface Props {
+  escrito: Escrito;
+}
+
+const { escrito } = Astro.props;
+const { titulo, descricao, data, tags, rascunho } = escrito.data;
+const { Content } = await render(escrito);
+---
+
+<ArticleLayout
+  titulo={titulo}
+  tituloPagina={`${titulo} — Rodrigo Grassi`}
+  descricao={descricao}
+  dataPublicacao={data}
+>
+  <SectionLabel slot="antes-titulo" sobreRoxo>// anotações de oficina</SectionLabel>
+
+  <div slot="depois-titulo" class="meta">
+    <time datetime={dataIso(data)}>{formatarData(data)}</time>
+    {tags && tags.length > 0 && (
+      <ul class="tags" aria-label="Tags">
+        {tags.map((tag) => <li>#{tag}</li>)}
+      </ul>
+    )}
+    {rascunho && <span class="rascunho">rascunho</span>}
+  </div>
+
+  <Content />
+
+  <div class="voltar">
+    <a href="/escritos/"><span aria-hidden="true">←</span> Todos os escritos</a>
+  </div>
+</ArticleLayout>
+
+<style>
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
+    margin-top: 24px;
+    color: var(--on-roxo-label);
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Só aparece no npm run dev: rascunhos não entram no build de produção */
+  .rascunho {
+    padding: 3px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--surface-2);
+    color: #E4E4E7;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .voltar {
+    margin-top: 64px;
+  }
+
+  .voltar a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .voltar a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .meta {
+      font-size: 13px;
+    }
+  }
+</style>

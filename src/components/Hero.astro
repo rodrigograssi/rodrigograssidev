@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets";
+import SectionLabel from "./SectionLabel.astro";
+import fotoTopo from "../assets/fotos/rodrigo-topo.jpg";
+---
+
+<div class="hero container">
+  <div class="texto">
+    <SectionLabel sobreRoxo>// desenvolvedor · infraestrutura</SectionLabel>
+    <h1>Desenvolvo sistemas e cuido da infraestrutura onde eles rodam.</h1>
+    <p class="apresentacao">
+      Sou Rodrigo Grassi, desenvolvedor .NET e administrador de redes e servidores na FMVZ/UNESP, em Botucatu (SP). Aqui ficam meus projetos pessoais e o que aprendo pelo caminho.
+    </p>
+    <div class="acoes">
+      <a class="botao botao--primario" href="#paiol">Ver projetos</a>
+      <a class="botao botao--secundario" href="#contato">Contato</a>
+    </div>
+  </div>
+
+  <Image
+    class="foto"
+    src={fotoTopo}
+    alt="Rodrigo Grassi"
+    width={320}
+    height={400}
+    densities={[1, 2]}
+    loading="eager"
+  />
+</div>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+    padding-block: 72px 112px;
+  }
+
+  .texto {
+    grid-column: 1 / span 8;
+  }
+
+  h1 {
+    margin-top: 24px;
+    font-size: clamp(42px, 5.9vw, 84px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .apresentacao {
+    max-width: 640px;
+    margin-top: 32px;
+    color: var(--on-roxo-soft);
+    font-size: 21px;
+    line-height: 1.65;
+  }
+
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 44px;
+  }
+
+  .foto {
+    grid-column: 9 / span 4;
+    align-self: end;
+    justify-self: end;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-photo);
+  }
+
+  @media (max-width: 1024px) {
+    .texto {
+      grid-column: 1 / span 12;
+    }
+
+    .foto {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding-block: 40px 72px;
+    }
+
+    h1 {
+      margin-top: 20px;
+      line-height: 1.04;
+    }
+
+    .apresentacao {
+      margin-top: 24px;
+      font-size: 17px;
+    }
+
+    .acoes {
+      gap: 12px;
+      margin-top: 32px;
+    }
+  }
+</style>

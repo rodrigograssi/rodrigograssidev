@@ -1,0 +1,73 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+import ProjectCard from "./ProjectCard.astro";
+import { obterProjetosOrdenados } from "../lib/projetos";
+
+const projetos = await obterProjetosOrdenados();
+---
+
+<section id="paiol" class="secao" aria-labelledby="titulo-paiol">
+  <div class="container">
+    <div class="cabecalho-secao">
+      <SectionLabel>02 / o paiol</SectionLabel>
+      <h2 id="titulo-paiol" class="titulo-secao">O paiol</h2>
+      <p class="texto-destaque">
+        No interior, paiol é o depósito onde se guarda a colheita, o milho e as ferramentas. Foi o nome que dei ao lugar onde guardo meus projetos pessoais: alguns em uso, outros em construção, outros esperando a vez.
+      </p>
+      <a class="link-paiol" href="/paiol/">Por que paiol? <span aria-hidden="true">→</span></a>
+    </div>
+
+    <ul class="cards">
+      {projetos.map((projeto) => <ProjectCard projeto={projeto} />)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cabecalho-secao {
+    max-width: 720px;
+  }
+
+  h2 {
+    margin-top: 16px;
+  }
+
+  .texto-destaque {
+    margin-top: 24px;
+  }
+
+  .link-paiol {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-top: 12px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .link-paiol:hover {
+    text-decoration: underline;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 56px;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 768px) {
+    .texto-destaque {
+      margin-top: 20px;
+    }
+
+    .cards {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+import { site } from "../config";
+
+interface Props {
+  // O link do RSS só aparece quando houver post publicado
+  mostrarRss?: boolean;
+}
+
+const { mostrarRss = false } = Astro.props;
+
+const links = [
+  { rotulo: "LinkedIn", href: site.linkedin },
+  { rotulo: "GitHub", href: site.github },
+  { rotulo: "RSS", href: mostrarRss ? "/rss.xml" : "" },
+].filter((link) => link.href);
+---
+
+<footer id="contato" class="rodape bloco-roxo">
+  <div class="container">
+    <div class="chamada">
+      <h2>Vamos conversar?</h2>
+      <p>Para falar de projetos, trabalho ou só trocar uma ideia.</p>
+      {site.email && (
+        <a class="botao botao--primario" href={`mailto:${site.email}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M3 7 L12 13 L21 7" />
+          </svg>
+          {site.email}
+        </a>
+      )}
+    </div>
+
+    <div class="linha-inferior">
+      <p class="assinatura">© Rodrigo Grassi · feito com Astro</p>
+      {links.length > 0 && (
+        <ul class="sociais">
+          {links.map((link) => (
+            <li>
+              <a href={link.href} rel={link.href.startsWith("http") ? "me noopener" : undefined}>
+                {link.rotulo}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    padding-block: 120px 40px;
+  }
+
+  .chamada {
+    max-width: 760px;
+  }
+
+  h2 {
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .chamada p {
+    margin-top: 20px;
+    color: var(--on-roxo-soft);
+    font-size: 21px;
+    line-height: 1.6;
+  }
+
+  .botao {
+    margin-top: 36px;
+  }
+
+  .linha-inferior {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+    margin-top: 96px;
+    padding-top: 24px;
+    border-top: 1px solid var(--roxo-divider);
+  }
+
+  .assinatura {
+    color: var(--on-roxo-label);
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+
+  .sociais {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sociais a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--on-roxo);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .sociais a:hover {
+    color: var(--on-roxo);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .rodape {
+      padding-block: 72px 24px;
+    }
+
+    h2 {
+      font-size: 38px;
+    }
+
+    .chamada p {
+      font-size: 17px;
+    }
+
+    .botao {
+      margin-top: 28px;
+      max-width: 100%;
+    }
+
+    .linha-inferior {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 64px;
+    }
+
+    .assinatura {
+      font-size: 13px;
+    }
+  }
+</style>

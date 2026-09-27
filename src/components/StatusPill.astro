@@ -1,0 +1,27 @@
+---
+import { rotulosStatus, type StatusProjeto } from "../lib/projetos";
+
+interface Props {
+  status: StatusProjeto;
+}
+
+const { status } = Astro.props;
+---
+
+<span class="pilula">{rotulosStatus[status]}</span>
+
+<style>
+  .pilula {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 14px;
+    border-radius: var(--radius-pill);
+    background: var(--surface-2);
+    color: #E4E4E7;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+</style>

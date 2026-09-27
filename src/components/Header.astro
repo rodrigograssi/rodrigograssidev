@@ -1,0 +1,183 @@
+---
+import Logo from "./Logo.astro";
+
+interface Props {
+  // O item "Escritos" só aparece quando houver post publicado
+  mostrarEscritos?: boolean;
+}
+
+const { mostrarEscritos = false } = Astro.props;
+
+// Âncoras com "/" na frente funcionam tanto na home quanto nas páginas internas
+const itens = [
+  { rotulo: "Sobre", href: "/#sobre" },
+  { rotulo: "O paiol", href: "/#paiol" },
+  ...(mostrarEscritos ? [{ rotulo: "Escritos", href: "/#escritos" }] : []),
+  { rotulo: "Contato", href: "#contato" },
+];
+---
+
+<header class="cabecalho container">
+  <Logo />
+
+  <nav aria-label="Principal">
+    <button
+      class="botao-menu"
+      type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      aria-controls="menu-principal"
+      hidden
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path class="icone-abrir" d="M4 7 H20 M4 12 H20 M4 17 H20" />
+        <path class="icone-fechar" d="M6 6 L18 18 M18 6 L6 18" />
+      </svg>
+    </button>
+
+    <ul id="menu-principal" class="menu">
+      {itens.map((item) => (
+        <li>
+          <a href={item.href}>{item.rotulo}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script is:inline>
+  // Menu mobile: sem JS o menu fica sempre aberto no mobile (o botão nem aparece)
+  (() => {
+    const botao = document.querySelector(".botao-menu");
+    const menu = document.getElementById("menu-principal");
+    if (!botao || !menu) return;
+
+    botao.hidden = false;
+    document.documentElement.classList.add("menu-com-js");
+
+    const alternar = (aberto) => {
+      botao.setAttribute("aria-expanded", String(aberto));
+      botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+      menu.classList.toggle("aberto", aberto);
+    };
+
+    botao.addEventListener("click", () => {
+      alternar(botao.getAttribute("aria-expanded") !== "true");
+    });
+
+    menu.addEventListener("click", (evento) => {
+      if (evento.target.closest("a")) alternar(false);
+    });
+
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && menu.classList.contains("aberto")) {
+        alternar(false);
+        botao.focus();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .cabecalho {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 28px;
+  }
+
+  .menu {
+    display: flex;
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .menu a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: var(--radius-pill);
+    color: var(--on-roxo);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .menu a:hover {
+    background: rgb(255 255 255 / 0.12);
+    color: var(--on-roxo);
+  }
+
+  .botao-menu {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .cabecalho {
+      flex-wrap: wrap;
+      padding-block: 16px;
+    }
+
+    .botao-menu:not([hidden]) {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 0;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--on-roxo);
+      box-shadow: inset 0 0 0 1.5px var(--roxo-divider);
+      cursor: pointer;
+    }
+
+    .icone-fechar {
+      display: none;
+    }
+
+    .botao-menu[aria-expanded="true"] .icone-abrir {
+      display: none;
+    }
+
+    .botao-menu[aria-expanded="true"] .icone-fechar {
+      display: inline;
+    }
+
+    /* Sem JS: menu empilhado abaixo do logo */
+    .menu {
+      flex-wrap: wrap;
+      gap: 0;
+    }
+
+    :global(.menu-com-js) .menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: var(--gutter);
+      right: var(--gutter);
+      z-index: 10;
+      flex-direction: column;
+      padding: 8px;
+      border-radius: var(--radius-tile);
+      background: var(--roxo);
+      box-shadow: inset 0 0 0 1px var(--roxo-divider);
+    }
+
+    :global(.menu-com-js) .menu.aberto {
+      display: flex;
+    }
+
+    :global(.menu-com-js) .menu a {
+      display: flex;
+      min-height: 48px;
+      padding: 0 16px;
+    }
+  }
+</style>

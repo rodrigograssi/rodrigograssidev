@@ -1,0 +1,178 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  // Título exibido no H1, quando diferente do <title> da página
+  tituloPagina?: string;
+  // Estilos de texto corrido (Markdown). Desligar em páginas que só listam itens.
+  prosa?: boolean;
+  dataPublicacao?: Date;
+}
+
+const { titulo, descricao, tituloPagina, prosa = true, dataPublicacao } = Astro.props;
+---
+
+<BaseLayout
+  titulo={tituloPagina ?? titulo}
+  descricao={descricao}
+  tipo={dataPublicacao ? "article" : "website"}
+  dataPublicacao={dataPublicacao}
+>
+  <div slot="topo" class="topo-artigo">
+    <div class="coluna-leitura">
+      <slot name="antes-titulo" />
+      <h1>{titulo}</h1>
+      <slot name="depois-titulo" />
+    </div>
+  </div>
+
+  <article class="artigo">
+    <div class:list={["coluna-leitura", { prosa }]}>
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Coluna de leitura de ~680px, centralizada, com o gutter do site */
+  .coluna-leitura {
+    width: 100%;
+    max-width: calc(680px + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .topo-artigo {
+    padding-block: 48px 88px;
+  }
+
+  h1 {
+    font-size: clamp(42px, 4.6vw, 64px);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  :global(.rotulo) + h1 {
+    margin-top: 20px;
+  }
+
+  .artigo {
+    padding-block: 80px 120px;
+  }
+
+  .prosa :global(p),
+  .prosa :global(ul),
+  .prosa :global(ol) {
+    color: var(--text-2);
+    font-size: 19px;
+    line-height: 1.7;
+  }
+
+  .prosa :global(* + p),
+  .prosa :global(* + ul),
+  .prosa :global(* + ol) {
+    margin-top: 24px;
+  }
+
+  .prosa :global(ul),
+  .prosa :global(ol) {
+    padding-left: 24px;
+  }
+
+  .prosa :global(li + li) {
+    margin-top: 12px;
+  }
+
+  .prosa :global(li::marker) {
+    color: var(--lilas);
+  }
+
+  .prosa :global(strong) {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .prosa :global(h2) {
+    margin-top: 56px;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .prosa :global(h3) {
+    margin-top: 40px;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .prosa :global(h2 + *),
+  .prosa :global(h3 + *) {
+    margin-top: 16px;
+  }
+
+  .prosa :global(code) {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+
+  .prosa :global(pre) {
+    margin-top: 24px;
+    padding: 20px 24px;
+    border-radius: var(--radius-tile);
+    background: var(--surface) !important;
+    overflow-x: auto;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .prosa :global(pre code) {
+    padding: 0;
+    background: none;
+  }
+
+  .prosa :global(blockquote) {
+    margin-top: 24px;
+    padding-left: 20px;
+    border-left: 3px solid var(--roxo-divider);
+  }
+
+  .prosa :global(img) {
+    height: auto;
+    margin-top: 32px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .topo-artigo {
+      padding-block: 32px 56px;
+    }
+
+    .artigo {
+      padding-block: 48px 72px;
+    }
+
+    .prosa :global(p),
+    .prosa :global(ul),
+    .prosa :global(ol) {
+      font-size: 17px;
+    }
+
+    .prosa :global(h2) {
+      font-size: 26px;
+    }
+
+    .prosa :global(h3) {
+      font-size: 21px;
+    }
+  }
+</style>
