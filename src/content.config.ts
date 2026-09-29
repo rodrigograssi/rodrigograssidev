@@ -10,7 +10,7 @@ const projetos = defineCollection({
     subdominio: z.string().optional(),
     tagline: z.string(),
     descricao: z.string(),
-    status: z.enum(["em-uso", "em-construcao", "engavetado"]),
+    status: z.enum(["em-uso", "em-construcao", "em-homologacao", "engavetado"]),
     ordem: z.number().int(),
     link: z.string().optional(),
   }),

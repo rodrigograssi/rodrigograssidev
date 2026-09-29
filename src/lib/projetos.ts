@@ -6,6 +6,7 @@ export type StatusProjeto = Projeto["data"]["status"];
 export const rotulosStatus: Record<StatusProjeto, string> = {
   "em-uso": "Em uso",
   "em-construcao": "Em construção",
+  "em-homologacao": "Em Homologação",
   engavetado: "Engavetado",
 };
 

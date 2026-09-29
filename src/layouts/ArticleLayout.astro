@@ -147,7 +147,11 @@ const { titulo, descricao, tituloPagina, prosa = true, dataPublicacao } = Astro.
   }
 
   .prosa :global(img) {
+    display: block;
+    width: 100%;
+    max-width: 480px;
     height: auto;
+    margin-inline: auto;
     margin-top: 32px;
     border-radius: 20px;
   }
